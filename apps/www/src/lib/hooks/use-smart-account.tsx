@@ -51,7 +51,7 @@ export const useSmartAccount = () => {
       },
     });
 
-    return smartAccountClient;
+    return { client: smartAccountClient, smartAccount: simpleSmartAccount };
   };
 
   const smartAccount = useQuery({
