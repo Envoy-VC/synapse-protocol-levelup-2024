@@ -5,6 +5,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 // Libraries
 import {NeuronMessage} from "../libraries/NeuronMessage.sol";
+import {ConduitMessage} from "../libraries/ConduitMessage.sol";
 
 // Interfaces
 import "../interfaces/INeuron.sol";
@@ -35,7 +36,8 @@ contract Neuron is INeuron, Ownable {
             NeuronMessage.Message memory _forwardedMsg = NeuronMessage.decodeRequest(_message.data);
             _neuron.receiveMessage(_forwardedMsg);
         } else {
-            // TODO: Implement Synapse Call
+            ConduitMessage.Message memory _executionMessage = ConduitMessage.decodeMessage(_message.data);
+            synapse.receiveMessage(_executionMessage);
         }
     }
 }
