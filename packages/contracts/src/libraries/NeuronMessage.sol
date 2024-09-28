@@ -16,6 +16,7 @@ library NeuronMessage {
     }
 
     error EmptyData();
+    error NotAContract();
 
     function initializeSynapseRequest(address _sender, address _recipient, bytes memory _data)
         internal
@@ -47,5 +48,13 @@ library NeuronMessage {
 
     function decodeRequest(bytes memory _data) public pure returns (Message memory) {
         return abi.decode(_data, (Message));
+    }
+
+    function isSmartContract(address _address) internal view {
+        uint256 size;
+        assembly {
+            size := extcodesize(_address)
+        }
+        if (size == 0) revert NotAContract();
     }
 }
