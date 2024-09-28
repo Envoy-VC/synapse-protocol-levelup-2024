@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import {Test, console2 as console, Vm} from "forge-std/Test.sol";
+import {Test, console2 as console} from "forge-std/Test.sol";
+import {Vm} from "forge-std/Vm.sol";
 import {Counter} from "src/Counter.sol";
 
 contract SetUp is Test {

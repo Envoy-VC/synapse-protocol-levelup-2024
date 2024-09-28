@@ -3,6 +3,10 @@ pragma solidity ^0.8.26;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
+// Libraries
+import {ConduitMessage} from "./libraries/ConduitMessage.sol";
+
+// Interfaces
 import "./interfaces/ISynapse.sol";
 
 contract Synapse is ISynapse, Ownable {
@@ -15,6 +19,10 @@ contract Synapse is ISynapse, Ownable {
 
     error AlreadyRegistered(address conduit);
     error NotAWhitelistedConduit(address conduit);
+
+    // Events
+    event ExecutionSuccess(ConduitMessage.Message message, bytes returnData);
+    event ExecutionFailed(ConduitMessage.Message message);
 
     constructor(address _initialOwner) Ownable(_initialOwner) {}
 
@@ -32,6 +40,21 @@ contract Synapse is ISynapse, Ownable {
     function onlyWhitelistConduits(address _conduit) internal view {
         if (!_whitelistedConduits[_conduit]) {
             revert NotAWhitelistedConduit(_conduit);
+        }
+    }
+
+    function receiveMessage(ConduitMessage.Message memory message) public {
+        _receiveMessage(message);
+    }
+
+    function _receiveMessage(ConduitMessage.Message memory _message) internal {
+        onlyWhitelistConduits(_message.recipient);
+        (bool success, bytes memory data) = _message.recipient.call(_message.data);
+
+        if (success) {
+            emit ExecutionSuccess(_message, data);
+        } else {
+            emit ExecutionFailed(_message);
         }
     }
 }
