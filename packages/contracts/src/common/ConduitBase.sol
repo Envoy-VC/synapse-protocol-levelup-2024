@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import {IConduit} from "../interfaces/IConduit.sol";
 import {ISynapse} from "../interfaces/ISynapse.sol";
 
-contract ConduitBase is IConduit {
+abstract contract ConduitBase is IConduit {
     ISynapse public synapse;
 
     error OnlySynapse();

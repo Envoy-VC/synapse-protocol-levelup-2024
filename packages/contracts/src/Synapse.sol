@@ -49,7 +49,8 @@ contract Synapse is ISynapse, Ownable {
 
     function _receiveMessage(ConduitMessage.Message memory _message) internal {
         onlyWhitelistConduits(_message.recipient);
-        (bool success, bytes memory data) = _message.recipient.call(_message.data);
+        (bool success, bytes memory data) =
+            _message.recipient.call(abi.encodeWithSignature("execute(bytes)", _message.data));
 
         if (success) {
             emit ExecutionSuccess(_message, data);
