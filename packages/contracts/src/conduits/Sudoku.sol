@@ -6,6 +6,11 @@ import {ConduitBase} from "../common/ConduitBase.sol";
 // Verifier
 import {UltraVerifier} from "../verifiers/sudoku.sol";
 
+struct SudokuMessage {
+    uint8 position;
+    uint8 value;
+}
+
 contract Sudoku is ConduitBase {
     UltraVerifier public verifier;
 
@@ -15,11 +20,6 @@ contract Sudoku is ConduitBase {
     // Errors
     error InvalidPosition();
     error OutOfRangeValue();
-
-    struct SudokuMessage {
-        uint8 position;
-        uint8 value;
-    }
 
     constructor(address _synapse, address _verifier) ConduitBase(_synapse) {
         verifier = UltraVerifier(_verifier);
@@ -34,7 +34,7 @@ contract Sudoku is ConduitBase {
         if (message.value >= 5 || message.value == 0) {
             revert OutOfRangeValue();
         }
-        
+
         _values[message.position] = message.value;
     }
 
