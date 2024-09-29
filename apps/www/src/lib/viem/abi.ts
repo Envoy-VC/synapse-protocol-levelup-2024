@@ -478,7 +478,7 @@ export const SUDOKU_CONDUIT_ABI = [
   { type: 'error', name: 'OutOfRangeValue', inputs: [] },
 ] as const;
 
-export const STABLE_COIN_CONDUIT = [
+export const STABLECOIN_CONDUIT_ABI = [
   {
     type: 'constructor',
     inputs: [
