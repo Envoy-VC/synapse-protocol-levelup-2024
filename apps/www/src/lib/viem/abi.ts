@@ -281,3 +281,141 @@ export const NEURON_FACTORY_ABI = [
     inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
   },
 ] as const;
+
+export const NEURON_ABI = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_initialOwner', type: 'address', internalType: 'address' },
+      { name: '_synapse', type: 'address', internalType: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: '_handleMessage',
+    inputs: [
+      {
+        name: '_message',
+        type: 'tuple',
+        internalType: 'struct NeuronMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          {
+            name: 'receiver',
+            type: 'uint8',
+            internalType: 'enum NeuronMessage.Receiver',
+          },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+    ],
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    name: 'owner',
+    inputs: [],
+    outputs: [{ name: '', type: 'address', internalType: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'receiveMessage',
+    inputs: [
+      {
+        name: '_message',
+        type: 'tuple',
+        internalType: 'struct NeuronMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          {
+            name: 'receiver',
+            type: 'uint8',
+            internalType: 'enum NeuronMessage.Receiver',
+          },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+    ],
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    name: 'renounceOwnership',
+    inputs: [],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'sendMessage',
+    inputs: [
+      {
+        name: '_message',
+        type: 'tuple',
+        internalType: 'struct NeuronMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          {
+            name: 'receiver',
+            type: 'uint8',
+            internalType: 'enum NeuronMessage.Receiver',
+          },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+    ],
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    name: 'synapse',
+    inputs: [],
+    outputs: [{ name: '', type: 'address', internalType: 'contract ISynapse' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'transferOwnership',
+    inputs: [{ name: 'newOwner', type: 'address', internalType: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    name: 'OwnershipTransferred',
+    inputs: [
+      {
+        name: 'previousOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+      {
+        name: 'newOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+    ],
+    anonymous: false,
+  },
+  { type: 'error', name: 'NotAContract', inputs: [] },
+  {
+    type: 'error',
+    name: 'OwnableInvalidOwner',
+    inputs: [{ name: 'owner', type: 'address', internalType: 'address' }],
+  },
+  {
+    type: 'error',
+    name: 'OwnableUnauthorizedAccount',
+    inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
+  },
+] as const;
