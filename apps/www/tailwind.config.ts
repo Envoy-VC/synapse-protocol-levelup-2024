@@ -20,6 +20,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
+        eastman: ['var(--font-eastman)'],
       },
       colors: {
         border: 'var(--border)',

@@ -5,5 +5,5 @@ import React from 'react';
 import { DynamicWidget } from '@dynamic-labs/sdk-react-core';
 
 export const ConnectButton = () => {
-  return <DynamicWidget />;
+  return <DynamicWidget innerButtonComponent={<>Log In</>} />;
 };
