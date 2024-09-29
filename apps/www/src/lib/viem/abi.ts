@@ -1,0 +1,157 @@
+export const SYNAPSE_ABI = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_initialOwner', type: 'address', internalType: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: '_conduitCount',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: '_conduits',
+    inputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    outputs: [{ name: '', type: 'address', internalType: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: '_whitelistedConduits',
+    inputs: [{ name: '', type: 'address', internalType: 'address' }],
+    outputs: [{ name: '', type: 'bool', internalType: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'owner',
+    inputs: [],
+    outputs: [{ name: '', type: 'address', internalType: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'receiveMessage',
+    inputs: [
+      {
+        name: '_message',
+        type: 'tuple',
+        internalType: 'struct ConduitMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+    ],
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    name: 'registerConduit',
+    inputs: [{ name: '_conduit', type: 'address', internalType: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'renounceOwnership',
+    inputs: [],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'transferOwnership',
+    inputs: [{ name: 'newOwner', type: 'address', internalType: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    name: 'ExecutionFailed',
+    inputs: [
+      {
+        name: 'message',
+        type: 'tuple',
+        indexed: false,
+        internalType: 'struct ConduitMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'event',
+    name: 'ExecutionSuccess',
+    inputs: [
+      {
+        name: 'message',
+        type: 'tuple',
+        indexed: false,
+        internalType: 'struct ConduitMessage.Message',
+        components: [
+          { name: 'sender', type: 'address', internalType: 'address' },
+          { name: 'recipient', type: 'address', internalType: 'address' },
+          { name: 'data', type: 'bytes', internalType: 'bytes' },
+        ],
+      },
+      {
+        name: 'returnData',
+        type: 'bytes',
+        indexed: false,
+        internalType: 'bytes',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'event',
+    name: 'OwnershipTransferred',
+    inputs: [
+      {
+        name: 'previousOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+      {
+        name: 'newOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'error',
+    name: 'AlreadyRegistered',
+    inputs: [{ name: 'conduit', type: 'address', internalType: 'address' }],
+  },
+  {
+    type: 'error',
+    name: 'NotAWhitelistedConduit',
+    inputs: [{ name: 'conduit', type: 'address', internalType: 'address' }],
+  },
+  {
+    type: 'error',
+    name: 'OwnableInvalidOwner',
+    inputs: [{ name: 'owner', type: 'address', internalType: 'address' }],
+  },
+  {
+    type: 'error',
+    name: 'OwnableUnauthorizedAccount',
+    inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
+  },
+] as const;
