@@ -18,26 +18,26 @@ contract Neuron is INeuron, Ownable {
         synapse = ISynapse(_synapse);
     }
 
-    function sendMessage(NeuronMessage.Message memory _message) public onlyOwner {
+    function sendMessage(NeuronMessage.Message memory _message) public payable onlyOwner {
         _handleMessage(_message);
     }
 
-    function receiveMessage(NeuronMessage.Message memory _message) public {
+    function receiveMessage(NeuronMessage.Message memory _message) public payable {
         // Only Accept calls from Smart Contracts
         NeuronMessage.isSmartContract(_message.sender);
         _handleMessage(_message);
     }
 
-    function _handleMessage(NeuronMessage.Message memory _message) internal {
+    function _handleMessage(NeuronMessage.Message memory _message) public payable {
         // Only Send Messages to Smart Contracts
         NeuronMessage.isSmartContract(_message.recipient);
         if (_message.receiver == NeuronMessage.Receiver.Neuron) {
             INeuron _neuron = INeuron(_message.recipient);
             NeuronMessage.Message memory _forwardedMsg = NeuronMessage.decodeRequest(_message.data);
-            _neuron.receiveMessage(_forwardedMsg);
+            _neuron.receiveMessage{value: msg.value}(_forwardedMsg);
         } else {
             ConduitMessage.Message memory _executionMessage = ConduitMessage.decodeMessage(_message.data);
-            synapse.receiveMessage(_executionMessage);
+            synapse.receiveMessage{value: msg.value}(_executionMessage);
         }
     }
 }

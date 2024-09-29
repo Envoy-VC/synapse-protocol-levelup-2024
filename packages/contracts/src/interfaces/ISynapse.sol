@@ -6,5 +6,5 @@ import {ConduitMessage} from "../libraries/ConduitMessage.sol";
 interface ISynapse {
     function registerConduit(address _conduit) external;
 
-    function receiveMessage(ConduitMessage.Message memory message) external;
+    function receiveMessage(ConduitMessage.Message memory message) external payable;
 }

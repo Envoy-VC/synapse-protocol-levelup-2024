@@ -25,7 +25,7 @@ contract Sudoku is ConduitBase {
         verifier = UltraVerifier(_verifier);
     }
 
-    function execute(bytes memory data) public {
+    function execute(bytes memory data) public payable {
         SudokuMessage memory message = abi.decode(data, (SudokuMessage));
         if (message.position >= 16) {
             revert InvalidPosition();
