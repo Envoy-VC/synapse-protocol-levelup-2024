@@ -31,10 +31,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang='en'>
-      <body className={`font-sans ${GeistSans.variable} ${eastMan.variable}`}>
+      <body
+        className={`font-sans ${GeistSans.variable} ${eastMan.variable} hide-scrollbar overflow-none`}
+      >
         <ThemeProvider>
           <Web3Provider initialState={initialState}>
-            <div className='top-0'>
+            <div className='absolute top-0 z-[2] w-full'>
               <Navbar />
             </div>
             {children}

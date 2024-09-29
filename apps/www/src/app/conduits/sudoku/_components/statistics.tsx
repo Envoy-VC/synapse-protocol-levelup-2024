@@ -15,7 +15,7 @@ interface SudokuStatsProps {
   setActiveTile: (tile: number | null) => void;
 }
 
-export const Statistics = ({ activeTile, setActiveTile }: SudokuStatsProps) => {
+export const Statistics = (_props: SudokuStatsProps) => {
   const [entropy, setEntropy] = useState<number>(556374);
 
   const [value, setValue] = useState<number>(0);

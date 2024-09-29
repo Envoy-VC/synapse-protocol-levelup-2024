@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { Hero } from '~/components';
-
-import { CreateNeuron } from '../components/create-neuron/index';
+import { ConduitCards, CreateNeuron, Hero } from '~/components';
 
 const Page = () => {
   return (
-    <div>
+    <div className='snap hide-scrollbar max-h-screen snap-y snap-mandatory overflow-y-scroll'>
       <Hero />
       <CreateNeuron />
+      <ConduitCards />
     </div>
   );
 };
