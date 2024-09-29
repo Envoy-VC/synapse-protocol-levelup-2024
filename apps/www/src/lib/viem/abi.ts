@@ -419,3 +419,61 @@ export const NEURON_ABI = [
     inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
   },
 ] as const;
+
+export const SUDOKU_CONDUIT_ABI = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_synapse', type: 'address', internalType: 'address' },
+      { name: '_verifier', type: 'address', internalType: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: '_values',
+    inputs: [{ name: '', type: 'uint8', internalType: 'uint8' }],
+    outputs: [{ name: '', type: 'uint8', internalType: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'execute',
+    inputs: [{ name: 'data', type: 'bytes', internalType: 'bytes' }],
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    name: 'getBoard',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint8[]', internalType: 'uint8[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'solveBoard',
+    inputs: [{ name: 'proof', type: 'bytes', internalType: 'bytes' }],
+    outputs: [{ name: '', type: 'bool', internalType: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'synapse',
+    inputs: [],
+    outputs: [{ name: '', type: 'address', internalType: 'contract ISynapse' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'verifier',
+    inputs: [],
+    outputs: [
+      { name: '', type: 'address', internalType: 'contract UltraVerifier' },
+    ],
+    stateMutability: 'view',
+  },
+  { type: 'error', name: 'InvalidPosition', inputs: [] },
+  { type: 'error', name: 'OnlySynapse', inputs: [] },
+  { type: 'error', name: 'OutOfRangeValue', inputs: [] },
+] as const;
