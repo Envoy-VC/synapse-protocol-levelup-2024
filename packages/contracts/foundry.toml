@@ -10,8 +10,9 @@ fs_permissions = [{ access = "read-write", path = "../" }]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
 
+
 [rpc_endpoints]
-sepolia = "https://endpoints.omniatech.io/v1/eth/sepolia/public"
+scroll = "${ALCHEMY_SCROLL_RPC}"
 
 [etherscan]
-sepolia = { key = "${SEPOLIA_ETHERSCAN_API_KEY}", chain = 11155111 }
+534351 = { key = "${SCROLL_ETHERSCAN_API_KEY}", url = "https://api-sepolia.scrollscan.com/api" }

@@ -6,8 +6,6 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 // Libraries
 import {ConduitMessage} from "./libraries/ConduitMessage.sol";
 
-import {Test, console2 as console, Vm} from "forge-std/Test.sol";
-
 // Interfaces
 import "./interfaces/ISynapse.sol";
 
@@ -47,15 +45,13 @@ contract Synapse is ISynapse, Ownable {
 
     function receiveMessage(ConduitMessage.Message memory _message) public payable {
         onlyWhitelistConduits(_message.recipient);
-        console.log("Synapse Received Message with Value: ", msg.value);
+
         (bool success, bytes memory data) =
             _message.recipient.call{value: msg.value}(abi.encodeWithSignature("execute(bytes)", _message.data));
 
         if (success) {
-            console.log("Execution Success");
             emit ExecutionSuccess(_message, data);
         } else {
-            console.log("Execution Failed");
             emit ExecutionFailed(_message);
         }
     }

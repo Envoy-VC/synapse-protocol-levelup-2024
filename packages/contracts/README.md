@@ -1,0 +1,9 @@
+```
+Deploying with deployer address 0xd0DEA0811432A260eB69879474163B652FAabd54
+  Deployed Synapse:  0xBaa2655881939eEa6eB1Cb0825BFdB9d735E3D5D
+  Deployed NeuronFactory:  0xD4eDDd367D5eB4a429Af8D104Ebd33D8800E16e0
+  Deployed Sudoku Conduit:  0xC795932774bAf5c348c869C093887F6CD430cc04
+  Deployed Ultraverifier:  0xf56d31F324c1B7F03b2DE99710043e9B41C6ECDc
+  Deployed Stablecoin Conduit:  0x712e0265f6dBaFB4Df20BbAE6d50026E48fbD2F3
+  Deployed MockPriceFeed:  0x42344bc9a62fEA188370461F8d5a164F32626e91
+```

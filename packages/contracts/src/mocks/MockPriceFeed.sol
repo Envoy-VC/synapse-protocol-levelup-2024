@@ -8,11 +8,11 @@ contract MockPriceFeed is Ownable {
 
     constructor(address initialOwner) Ownable(initialOwner) {}
 
-    function updatePrice(uint256 updatedPrice) public onlyOwner {
+    function updatePrice(uint256 updatedPrice) public {
         _currentPrice = updatedPrice;
     }
 
     function getCurrentPrice() public view returns (uint256) {
         return _currentPrice;
     }
-} 
+}
