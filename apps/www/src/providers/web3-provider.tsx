@@ -2,7 +2,7 @@
 
 import type { PropsWithChildren } from 'react';
 
-import {wagmiConfig } from '~/lib/viem';
+import { wagmiConfig } from '~/lib/viem';
 
 import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import { DynamicContextProvider } from '@dynamic-labs/sdk-react-core';
