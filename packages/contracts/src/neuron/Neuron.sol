@@ -18,7 +18,7 @@ contract Neuron is INeuron, Ownable {
         synapse = ISynapse(_synapse);
     }
 
-    function sendMessage(NeuronMessage.Message memory _message) public payable onlyOwner {
+    function sendMessage(NeuronMessage.Message memory _message) public payable {
         _handleMessage(_message);
     }
 
