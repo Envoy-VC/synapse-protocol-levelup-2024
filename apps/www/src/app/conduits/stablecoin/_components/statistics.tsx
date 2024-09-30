@@ -67,11 +67,33 @@ export const Statistics = () => {
   });
 
   const neededFormatted = useMemo(() => {
-    return (Number(needed ?? BigInt(0)) / 10 ** 18).toFixed(0);
+    const f = (Number(needed ?? BigInt(0)) / 10 ** 9).toFixed(0);
+    console.log(f);
+    return f;
   }, [needed]);
+
+  const refreshAll = async () => {
+    await Promise.all([
+      refetchCurrentPrice(),
+      refetchStabilityFactor(),
+      refetchTotalSupply(),
+      refetchUserBalance(),
+      refetchNeeded(),
+    ]);
+  };
 
   return (
     <div className='flex w-full flex-col gap-4'>
+      <div className='flex justify-end px-4'>
+        <Button
+          className='h-8 !p-1'
+          variant='link'
+          onClick={async () => await refreshAll()}
+        >
+          Refresh All
+          <RefreshCcwIcon className='ml-2 h-3 w-3' />
+        </Button>
+      </div>
       <div className='flex w-full flex-col gap-0 rounded-3xl bg-[#101010] px-4 py-3'>
         <div className='flex flex-row items-center justify-between'>
           <div className='text-xs font-medium'>Stability Factor</div>
@@ -153,7 +175,9 @@ export const Statistics = () => {
         </div>
         <div className='flex w-full flex-col gap-0 rounded-3xl bg-[#101010] px-4 py-3'>
           <div className='flex flex-row items-center justify-between'>
-            <div className='text-xs font-medium'>ETH needed for Stability</div>
+            <div className='text-xs font-medium'>
+              ETH needed for Stability (gwei)
+            </div>
             <Button
               className='h-8 w-8 !p-1'
               variant='link'
@@ -164,14 +188,16 @@ export const Statistics = () => {
               <RefreshCcwIcon className='h-3 w-3' />
             </Button>
           </div>
+
           <MotionNumber
-            className='text-7xl'
-            format={{ notation: 'standard' }}
+            className='flex flex-row items-end gap-3 text-7xl'
+            format={{ notation: 'compact' }}
             locales='en-US'
             value={neededFormatted}
           />
         </div>
       </div>
+
       <Sheet>
         <SheetTrigger asChild>
           <Button
