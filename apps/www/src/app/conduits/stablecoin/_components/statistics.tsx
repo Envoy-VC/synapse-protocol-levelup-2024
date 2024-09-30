@@ -1,8 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
+
+import { mockPriceFeedConfig, stablecoinConduitConfig } from '~/lib/viem';
 
 import MotionNumber from 'motion-number';
+import { zeroAddress } from 'viem';
+import { useAccount, useReadContract } from 'wagmi';
 
 import { Button } from '~/components/ui/button';
 import { Sheet, SheetTrigger } from '~/components/ui/sheet';
@@ -12,11 +16,59 @@ import { StablecoinActions } from './actions';
 import { RefreshCcwIcon } from 'lucide-react';
 
 export const Statistics = () => {
-  const [currentPrice, setCurrentPrice] = useState<number>(2478);
-  const [totalSupply, setTotalSupply] = useState<number>(2000000);
-  const [stabilityFactor, setStabilityFactor] = useState<number>(1.035);
-  const [needed, setNeeded] = useState<number>(0.008);
-  const [userBalance, setUserBalance] = useState<number>(2000);
+  const { address } = useAccount();
+
+  const { data: currentPrice, refetch: refetchCurrentPrice } = useReadContract({
+    ...mockPriceFeedConfig,
+    functionName: 'getCurrentPrice',
+    query: { initialData: BigInt(0) },
+  });
+
+  const currentPriceFormatted = useMemo(() => {
+    return (Number(currentPrice ?? BigInt(0)) / 10 ** 6).toFixed(2);
+  }, [currentPrice]);
+
+  const { data: stabilityFactor, refetch: refetchStabilityFactor } =
+    useReadContract({
+      ...stablecoinConduitConfig,
+      functionName: 'getStabilityFactor',
+      query: { initialData: BigInt(0) },
+    });
+
+  const stabilityFactorFormatted = useMemo(() => {
+    return (Number(stabilityFactor ?? BigInt(0)) / 10 ** 6).toFixed(4);
+  }, [stabilityFactor]);
+
+  const { data: totalSupply, refetch: refetchTotalSupply } = useReadContract({
+    ...stablecoinConduitConfig,
+    functionName: 'totalSupply',
+    query: { initialData: BigInt(0) },
+  });
+
+  const totalSupplyFormatted = useMemo(() => {
+    return (Number(totalSupply ?? BigInt(0)) / 10 ** 18).toFixed(0);
+  }, [totalSupply]);
+
+  const { data: userBalance, refetch: refetchUserBalance } = useReadContract({
+    ...stablecoinConduitConfig,
+    functionName: 'balanceOf',
+    args: [address ?? zeroAddress],
+    query: { initialData: BigInt(0) },
+  });
+
+  const userBalanceFormatted = useMemo(() => {
+    return (Number(userBalance ?? BigInt(0)) / 10 ** 18).toFixed(0);
+  }, [userBalance]);
+
+  const { data: needed, refetch: refetchNeeded } = useReadContract({
+    ...stablecoinConduitConfig,
+    functionName: 'additionalValueForStability',
+    query: { initialData: BigInt(0) },
+  });
+
+  const neededFormatted = useMemo(() => {
+    return (Number(needed ?? BigInt(0)) / 10 ** 18).toFixed(0);
+  }, [needed]);
 
   return (
     <div className='flex w-full flex-col gap-4'>
@@ -26,9 +78,7 @@ export const Statistics = () => {
           <Button
             className='h-8 w-8 !p-1'
             variant='link'
-            onClick={() => {
-              setStabilityFactor(Math.random() + 0.5);
-            }}
+            onClick={async () => await refetchStabilityFactor()}
           >
             <RefreshCcwIcon className='h-3 w-3' />
           </Button>
@@ -37,7 +87,7 @@ export const Statistics = () => {
           className='text-7xl'
           format={{ notation: 'standard' }}
           locales='en-US'
-          value={stabilityFactor}
+          value={stabilityFactorFormatted}
         />
       </div>
       <div className='flex flex-row gap-4'>
@@ -47,11 +97,7 @@ export const Statistics = () => {
             <Button
               className='h-8 w-8 !p-1'
               variant='link'
-              onClick={() => {
-                setCurrentPrice(
-                  Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000
-                );
-              }}
+              onClick={async () => await refetchCurrentPrice()}
             >
               <RefreshCcwIcon className='h-3 w-3' />
             </Button>
@@ -60,7 +106,7 @@ export const Statistics = () => {
             className='text-7xl'
             format={{ notation: 'standard' }}
             locales='en-US'
-            value={currentPrice}
+            value={currentPriceFormatted}
           />
         </div>
         <div className='flex w-full flex-col gap-0 rounded-3xl bg-[#101010] px-4 py-3'>
@@ -69,10 +115,8 @@ export const Statistics = () => {
             <Button
               className='h-8 w-8 !p-1'
               variant='link'
-              onClick={() => {
-                setTotalSupply(
-                  Math.floor(Math.random() * (3000000 - 1000000 + 1)) + 1000000
-                );
+              onClick={async () => {
+                await refetchTotalSupply();
               }}
             >
               <RefreshCcwIcon className='h-3 w-3' />
@@ -82,7 +126,7 @@ export const Statistics = () => {
             className='text-7xl'
             format={{ notation: 'compact' }}
             locales='en-US'
-            value={totalSupply}
+            value={totalSupplyFormatted}
           />
         </div>
       </div>
@@ -93,10 +137,8 @@ export const Statistics = () => {
             <Button
               className='h-8 w-8 !p-1'
               variant='link'
-              onClick={() => {
-                setUserBalance(
-                  Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000
-                );
+              onClick={async () => {
+                await refetchUserBalance();
               }}
             >
               <RefreshCcwIcon className='h-3 w-3' />
@@ -106,7 +148,7 @@ export const Statistics = () => {
             className='text-7xl'
             format={{ notation: 'compact' }}
             locales='en-US'
-            value={userBalance}
+            value={userBalanceFormatted}
           />
         </div>
         <div className='flex w-full flex-col gap-0 rounded-3xl bg-[#101010] px-4 py-3'>
@@ -115,9 +157,8 @@ export const Statistics = () => {
             <Button
               className='h-8 w-8 !p-1'
               variant='link'
-              onClick={() => {
-                // get random from 0-0.1
-                setNeeded(Math.random() * 0.1);
+              onClick={async () => {
+                await refetchNeeded();
               }}
             >
               <RefreshCcwIcon className='h-3 w-3' />
@@ -127,7 +168,7 @@ export const Statistics = () => {
             className='text-7xl'
             format={{ notation: 'standard' }}
             locales='en-US'
-            value={needed}
+            value={neededFormatted}
           />
         </div>
       </div>
