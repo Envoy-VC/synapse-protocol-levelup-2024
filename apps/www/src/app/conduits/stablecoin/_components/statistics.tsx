@@ -146,7 +146,7 @@ export const Statistics = () => {
           </div>
           <MotionNumber
             className='text-7xl'
-            format={{ notation: 'compact' }}
+            format={{ notation: 'standard' }}
             locales='en-US'
             value={totalSupplyFormatted}
           />
